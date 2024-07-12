@@ -41,7 +41,7 @@
     <ClCompile Include="Math\MathFunction.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Vector3.cpp">
+    <ClCompile Include="Math\Operators.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,5 +126,7 @@
     <ClInclude Include="Math\Sphereh.h" />
     <ClInclude Include="Math\Triangle.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Vector3ex.h" />
+    <ClInclude Include="Matrix4x4ex.h" />
   </ItemGroup>
 </Project>

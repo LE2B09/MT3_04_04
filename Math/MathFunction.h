@@ -4,8 +4,8 @@
 #define NOMINMAX
 #include "AABB.h"
 #include "Ball.h"
-#include "Matrix4x4.h"
-#include "Vector3.h"
+#include "Math/Vector3ex.h"
+#include "Math/Matrix4x4ex.h"
 #include "Vector4.h"
 #include "Segment.h"
 #include "Sphereh.h"
@@ -24,7 +24,7 @@ class MathFunction
 public:
 	/*----------Vector4型の関数---------*/
 
-	Vector4 Multiply(const Vector4& v, const Matrix4x4& m);
+	Vector4 Multiply(const Vector4& v, const Matrix4x4ex& m);
 
 
 	/*----------Vector3型の関数----------*/
@@ -35,74 +35,74 @@ public:
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	Vector3 Add(const Vector3& v1, const Vector3& v2);
+	Vector3ex Add(const Vector3ex& v1, const Vector3ex& v2);
 	/// <summary>
 	/// 減算
 	/// </summary>
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	Vector3 Subtract(const Vector3& v1, const Vector3& v2);
+	Vector3ex Subtract(const Vector3ex& v1, const Vector3ex& v2);
 	/// <summary>
 	/// スカラー
 	/// </summary>
 	/// <param name="scalar"></param>
 	/// <param name="v"></param>
 	/// <returns></returns>
-	Vector3 Multiply(float scalar, const Vector3& v);
+	Vector3ex Multiply(float scalar, const Vector3ex& v);
 	/// <summary>
 	/// 内積
 	/// </summary>
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	float Dot(const Vector3& v1, const Vector3& v2);
+	float Dot(const Vector3ex& v1, const Vector3ex& v2);
 	/// <summary>
 	/// 長さ（ノルム）
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
-	float Length(const Vector3& v);
+	float Length(const Vector3ex& v);
 	/// <summary>
 	/// 正規化
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
-	Vector3 Normalize(const Vector3& v);
+	Vector3ex Normalize(const Vector3ex& v);
 	/// <summary>
 	/// 座標変換
 	/// </summary>
 	/// <param name="vector"></param>
 	/// <param name="matrix"></param>
 	/// <returns></returns>
-	Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+	Vector3ex Transform(const Vector3ex& vector, const Matrix4x4ex& matrix);
 	/// <summary>
 	/// クロス積
 	/// </summary>
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	Vector3 Cross(const Vector3& v1, const Vector3& v2);
+	Vector3ex Cross(const Vector3ex& v1, const Vector3ex& v2);
 	/// <summary>
 	/// ベクトル射影
 	/// </summary>
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	Vector3 Project(const Vector3& v1, const Vector3& v2);
+	Vector3ex Project(const Vector3ex& v1, const Vector3ex& v2);
 	/// <summary>
 	/// 最近接点
 	/// </summary>
 	/// <param name="point"></param>
 	/// <param name="segment"></param>
 	/// <returns></returns>
-	Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
+	Vector3ex ClosestPoint(const Vector3ex& point, const Segment& segment);
 	/// <summary>
 	/// 与えられたベクトルに垂直なベクトルを計算
 	/// </summary>
 	/// <param name="vector"></param>
 	/// <returns></returns>
-	Vector3 Perpendicular(const Vector3& vector);
+	Vector3ex Perpendicular(const Vector3ex& vector);
 	/// <summary>
 	/// 線形補間
 	/// </summary>
@@ -110,7 +110,7 @@ public:
 	/// <param name="v2"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
+	Vector3ex Lerp(const Vector3ex& v1, const Vector3ex& v2, float t);
 	/// <summary>
 	/// 3D座標を2Dスクリーン座標に変換する関数
 	/// </summary>
@@ -118,14 +118,14 @@ public:
 	/// <param name="viewProjectionMatrix"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <returns></returns>
-	Vector3 ProjectToScreen(const Vector3& point, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix);
+	Vector3ex ProjectToScreen(const Vector3ex& point, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix);
 	/// <summary>
 	/// 反射ベクトルを求める関数
 	/// </summary>
 	/// <param name="input">入射ベクトル</param>
 	/// <param name="normal">法線</param>
 	/// <returns></returns>
-	Vector3 Reflect(const Vector3& input, const Vector3& normal);
+	Vector3ex Reflect(const Vector3ex& input, const Vector3ex& normal);
 
 	/*----------Matrix型の関数----------*/
 
@@ -135,68 +135,68 @@ public:
 	/// <param name="m1"></param>
 	/// <param name="m2"></param>
 	/// <returns></returns>
-	Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
+	Matrix4x4ex Add(const Matrix4x4ex& m1, const Matrix4x4ex& m2);
 	/// <summary>
 	/// 減算行列
 	/// </summary>
 	/// <param name="m1"></param>
 	/// <param name="m2"></param>
 	/// <returns></returns>
-	Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
+	Matrix4x4ex Subtract(const Matrix4x4ex& m1, const Matrix4x4ex& m2);
 	/// <summary>
 	/// 乗算行列
 	/// </summary>
 	/// <param name="m1"></param>
 	/// <param name="m2"></param>
 	/// <returns></returns>
-	Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
+	Matrix4x4ex Multiply(const Matrix4x4ex& m1, const Matrix4x4ex& m2);
 	/// <summary>
 	/// 逆行列
 	/// </summary>
 	/// <param name="matrix"></param>
 	/// <returns></returns>
-	Matrix4x4 Inverse(const Matrix4x4& matrix);
+	Matrix4x4ex Inverse(const Matrix4x4ex& matrix);
 	/// <summary>
 	/// 転置行列
 	/// </summary>
 	/// <param name="m"></param>
 	/// <returns></returns>
-	Matrix4x4 Transpose(const Matrix4x4& m);
+	Matrix4x4ex Transpose(const Matrix4x4ex& m);
 	/// <summary>
 	/// 単位行列
 	/// </summary>
 	/// <returns></returns>
-	Matrix4x4 MakeIdentity();
+	Matrix4x4ex MakeIdentity();
 	/// <summary>
 	/// スケーリング行列
 	/// </summary>
 	/// <param name="scale"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeScaleMatrix(const Vector3& scale);
+	Matrix4x4ex MakeScaleMatrix(const Vector3ex& scale);
 	/// <summary>
 	/// X軸の回転行列
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeRotateXMatrix(float radian);
+	Matrix4x4ex MakeRotateXMatrix(float radian);
 	/// <summary>
 	/// Yの回転行列
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeRotateYMatrix(float radian);
+	Matrix4x4ex MakeRotateYMatrix(float radian);
 	/// <summary>
 	/// Zの回転行列
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeRotateZMatrix(float radian);
+	Matrix4x4ex MakeRotateZMatrix(float radian);
 	/// <summary>
 	/// 平行移動行列 
 	/// </summary>
 	/// <param name="translate"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
+	Matrix4x4ex MakeTranslateMatrix(const Vector3ex& translate);
 	/// <summary>
 	/// アフィン変換行列
 	/// </summary>
@@ -204,7 +204,7 @@ public:
 	/// <param name="radian"></param>
 	/// <param name="translate"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& radian, const Vector3& translate);
+	Matrix4x4ex MakeAffineMatrix(const Vector3ex& scale, const Vector3ex& radian, const Vector3ex& translate);
 	/// <summary>
 	/// 透視投影行列
 	/// </summary>
@@ -213,7 +213,7 @@ public:
 	/// <param name="nearClip"></param>
 	/// <param name="farClip"></param>
 	/// <returns></returns>
-	Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
+	Matrix4x4ex MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
 	/// <summary>
 	/// 正射影行列
 	/// </summary>
@@ -224,7 +224,7 @@ public:
 	/// <param name="nearClip"></param>
 	/// <param name="farClip"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
+	Matrix4x4ex MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
 	/// <summary>
 	/// ビュー行列
 	/// </summary>
@@ -235,7 +235,7 @@ public:
 	/// <param name="minDepth"></param>
 	/// <param name="maxDepth"></param>
 	/// <returns></returns>
-	Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
+	Matrix4x4ex MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
 
 	/*----------立体を描画する関数----------*/
 
@@ -244,7 +244,7 @@ public:
 	/// </summary>
 	/// <param name="ViewProjectionMatrix"></param>
 	/// <param name="ViewportMatrix"></param>
-	void DrawGrid(const Matrix4x4& ViewProjectionMatrix, const Matrix4x4& ViewportMatrix);
+	void DrawGrid(const Matrix4x4ex& ViewProjectionMatrix, const Matrix4x4ex& ViewportMatrix);
 	/// <summary>
 	/// 球体を描画
 	/// </summary>
@@ -252,7 +252,7 @@ public:
 	/// <param name="viewProjectionMatrix"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <param name="color"></param>
-	void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
+	void DrawSphere(const Sphere& sphere, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color);
 	/// <summary>
 	/// 平面を描画
 	/// </summary>
@@ -260,7 +260,7 @@ public:
 	/// <param name="viewProjectionMatrix"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <param name="color"></param>
-	void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
+	void DrawPlane(const Plane& plane, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color);
 	/// <summary>
 	/// 三角形を描画
 	/// </summary>
@@ -268,7 +268,7 @@ public:
 	/// <param name="viewProjectionMatrix"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <param name="color"></param>
-	void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
+	void DrawTriangle(const Triangle& triangle, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color);
 	/// <summary>
 	/// AABBを描画
 	/// </summary>
@@ -276,7 +276,7 @@ public:
 	/// <param name="viewProjectionMatrix"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <param name="color"></param>
-	void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
+	void DrawAABB(const AABB& aabb, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color);
 	/// <summary>
 	/// ベジエ曲線を描画
 	/// </summary>
@@ -286,14 +286,14 @@ public:
 	/// <param name="viewProjection"></param>
 	/// <param name="viewportMatrix"></param>
 	/// <param name="color"></param>
-	void DrawBezier(const Vector3& controlPoint0, const Vector3& controlPoint1, const Vector3& controlPoint2, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color);
+	void DrawBezier(const Vector3ex& controlPoint0, const Vector3ex& controlPoint1, const Vector3ex& controlPoint2, const Matrix4x4ex& viewProjection, const Matrix4x4ex& viewportMatrix, uint32_t color);
 	/// <summary>
 	/// ベジエ曲線の制御点を描画
 	/// </summary>
 	/// <param name="controlPoint"></param>
 	/// <param name="viewProjection"></param>
 	/// <param name="viewportMatrix"></param>
-	void DrawControlPoint(const Vector3& controlPoint, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix);
+	void DrawControlPoint(const Vector3ex& controlPoint, const Matrix4x4ex& viewProjection, const Matrix4x4ex& viewportMatrix);
 
 	/*----------衝突判定を取る関数----------*/
 

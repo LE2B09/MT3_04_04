@@ -1,7 +1,7 @@
 #include "MathFunction.h"
 #include "Novice.h"
 
-Vector4 MathFunction::Multiply(const Vector4& v, const Matrix4x4& m)
+Vector4 MathFunction::Multiply(const Vector4& v, const Matrix4x4ex& m)
 {
 	Vector4 result{};
 	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + v.w * m.m[3][0];
@@ -11,43 +11,43 @@ Vector4 MathFunction::Multiply(const Vector4& v, const Matrix4x4& m)
 	return result;
 }
 
-Vector3 MathFunction::Add(const Vector3& v1, const Vector3& v2)
+Vector3ex MathFunction::Add(const Vector3ex& v1, const Vector3ex& v2)
 {
-	return Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+	return Vector3ex(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }
 
-Vector3 MathFunction::Subtract(const Vector3& v1, const Vector3& v2)
+Vector3ex MathFunction::Subtract(const Vector3ex& v1, const Vector3ex& v2)
 {
-	Vector3 result{};
+	Vector3ex result{};
 	result.x = v1.x - v2.x;
 	result.y = v1.y - v2.y;
 	result.z = v1.z - v2.z;
 	return result;
 }
 
-Vector3 MathFunction::Multiply(float scalar, const Vector3& v)
+Vector3ex MathFunction::Multiply(float scalar, const Vector3ex& v)
 {
-	Vector3 result{};
+	Vector3ex result{};
 	result.x = scalar * v.x;
 	result.y = scalar * v.y;
 	result.z = scalar * v.z;
 	return result;
 }
 
-float MathFunction::Dot(const Vector3& v1, const Vector3& v2)
+float MathFunction::Dot(const Vector3ex& v1, const Vector3ex& v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
-float MathFunction::Length(const Vector3& v)
+float MathFunction::Length(const Vector3ex& v)
 {
 	return sqrtf(powf(v.x, 2) + powf(v.y, 2) + powf(v.z, 2));
 }
 
-Vector3 MathFunction::Normalize(const Vector3& v)
+Vector3ex MathFunction::Normalize(const Vector3ex& v)
 {
 	float length = Length(v);
-	Vector3 result{};
+	Vector3ex result{};
 	if (length != 0.0) {
 		result.x = v.x / length;
 		result.y = v.y / length;
@@ -56,9 +56,9 @@ Vector3 MathFunction::Normalize(const Vector3& v)
 	return result;
 }
 
-Vector3 MathFunction::Transform(const Vector3& vector, const Matrix4x4& matrix)
+Vector3ex MathFunction::Transform(const Vector3ex& vector, const Matrix4x4ex& matrix)
 {
-	Vector3 result{};
+	Vector3ex result{};
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] + 1.0f * matrix.m[3][0];
 	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1] + 1.0f * matrix.m[3][1];
 	result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] + 1.0f * matrix.m[3][2];
@@ -70,38 +70,38 @@ Vector3 MathFunction::Transform(const Vector3& vector, const Matrix4x4& matrix)
 	return result;
 }
 
-Vector3 MathFunction::Cross(const Vector3& v1, const Vector3& v2)
+Vector3ex MathFunction::Cross(const Vector3ex& v1, const Vector3ex& v2)
 {
-	Vector3 result{};
+	Vector3ex result{};
 	result.x = v1.y * v2.z - v1.z * v2.y;
 	result.y = v1.z * v2.x - v1.x * v2.z;
 	result.z = v1.x * v2.y - v1.y * v2.x;
 	return result;
 }
 
-Vector3 MathFunction::Project(const Vector3& v1, const Vector3& v2)
+Vector3ex MathFunction::Project(const Vector3ex& v1, const Vector3ex& v2)
 {
 	return Multiply(Dot(v1, v2) / powf(Length(v2), 2), v2);
 }
 
-Vector3 MathFunction::ClosestPoint(const Vector3& point, const Segment& segment)
+Vector3ex MathFunction::ClosestPoint(const Vector3ex& point, const Segment& segment)
 {
 	// 線分の始点から終点へのベクトル
-	Vector3 segmentVec = segment.diff;
+	Vector3ex segmentVec = segment.diff;
 
 	// 線分の始点からpointへのベクトル
-	Vector3 pointToOrigin = Subtract(point, segment.origin);
+	Vector3ex pointToOrigin = Subtract(point, segment.origin);
 
 	// 線分の始点からpointへのベクトルを、線分の方向ベクトルに投影し、線分上の点を求める
 	float t = Dot(pointToOrigin, segmentVec) / Dot(segmentVec, segmentVec);
 
 	// 線分上の最近接点
-	Vector3 closestPointOnSegment = Add(segment.origin, Multiply(t, segmentVec));
+	Vector3ex closestPointOnSegment = Add(segment.origin, Multiply(t, segmentVec));
 
 	return closestPointOnSegment;
 }
 
-Vector3 MathFunction::Perpendicular(const Vector3& vector)
+Vector3ex MathFunction::Perpendicular(const Vector3ex& vector)
 {
 	if (vector.x != 0.0f || vector.z != 0.0f)
 	{
@@ -110,12 +110,12 @@ Vector3 MathFunction::Perpendicular(const Vector3& vector)
 	return { 0.0f, -vector.z, vector.y }; // y軸のみの場合
 }
 
-Vector3 MathFunction::Lerp(const Vector3& v1, const Vector3& v2, float t)
+Vector3ex MathFunction::Lerp(const Vector3ex& v1, const Vector3ex& v2, float t)
 {
-	return Vector3(t * v1.x + (1.0f - t) * v2.x, t * v1.y + (1.0f - t) * v2.y, t * v1.z + (1.0f - t) * v2.z);
+	return Vector3ex(t * v1.x + (1.0f - t) * v2.x, t * v1.y + (1.0f - t) * v2.y, t * v1.z + (1.0f - t) * v2.z);
 }
 
-Vector3 MathFunction::ProjectToScreen(const Vector3& point, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix)
+Vector3ex MathFunction::ProjectToScreen(const Vector3ex& point, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix)
 {
 	Vector4 clipSpacePoint = Multiply(Vector4{ point.x, point.y, point.z, 1.0f }, viewProjectionMatrix);
 	Vector4 ndcSpacePoint = { clipSpacePoint.x / clipSpacePoint.w, clipSpacePoint.y / clipSpacePoint.w, clipSpacePoint.z / clipSpacePoint.w, 1.0f };
@@ -123,16 +123,16 @@ Vector3 MathFunction::ProjectToScreen(const Vector3& point, const Matrix4x4& vie
 	return { screenSpacePoint.x, screenSpacePoint.y, screenSpacePoint.z };
 }
 
-Vector3 MathFunction::Reflect(const Vector3& input, const Vector3& normal)
+Vector3ex MathFunction::Reflect(const Vector3ex& input, const Vector3ex& normal)
 {
 	float dotProduct = Dot(input, normal);
-	Vector3 reflection = input - normal * (2 * dotProduct);
+	Vector3ex reflection = input - normal * (2 * dotProduct);
 	return reflection;
 }
 
-Matrix4x4 MathFunction::Add(const Matrix4x4& m1, const Matrix4x4& m2)
+Matrix4x4ex MathFunction::Add(const Matrix4x4ex& m1, const Matrix4x4ex& m2)
 {
-	Matrix4x4 result;
+	Matrix4x4ex result;
 	for (int i = 0; i < 4; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
@@ -143,9 +143,9 @@ Matrix4x4 MathFunction::Add(const Matrix4x4& m1, const Matrix4x4& m2)
 	return result;
 }
 
-Matrix4x4 MathFunction::Subtract(const Matrix4x4& m1, const Matrix4x4& m2)
+Matrix4x4ex MathFunction::Subtract(const Matrix4x4ex& m1, const Matrix4x4ex& m2)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -156,9 +156,9 @@ Matrix4x4 MathFunction::Subtract(const Matrix4x4& m1, const Matrix4x4& m2)
 	return result;
 }
 
-Matrix4x4 MathFunction::Multiply(const Matrix4x4& m1, const Matrix4x4& m2)
+Matrix4x4ex MathFunction::Multiply(const Matrix4x4ex& m1, const Matrix4x4ex& m2)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -172,9 +172,9 @@ Matrix4x4 MathFunction::Multiply(const Matrix4x4& m1, const Matrix4x4& m2)
 	return result;
 }
 
-Matrix4x4 MathFunction::Inverse(const Matrix4x4& matrix)
+Matrix4x4ex MathFunction::Inverse(const Matrix4x4ex& matrix)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 
 	float det = matrix.m[0][0] * (matrix.m[1][1] * matrix.m[2][2] * matrix.m[3][3] + matrix.m[1][2] * matrix.m[2][3] * matrix.m[3][1] + matrix.m[1][3] * matrix.m[2][1] * matrix.m[3][2] -
 		matrix.m[1][3] * matrix.m[2][2] * matrix.m[3][1] - matrix.m[1][2] * matrix.m[2][1] * matrix.m[3][3] - matrix.m[1][1] * matrix.m[2][3] * matrix.m[3][2]) -
@@ -240,9 +240,9 @@ Matrix4x4 MathFunction::Inverse(const Matrix4x4& matrix)
 	return result;
 }
 
-Matrix4x4 MathFunction::Transpose(const Matrix4x4& m)
+Matrix4x4ex MathFunction::Transpose(const Matrix4x4ex& m)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -253,9 +253,9 @@ Matrix4x4 MathFunction::Transpose(const Matrix4x4& m)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeIdentity()
+Matrix4x4ex MathFunction::MakeIdentity()
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -273,9 +273,9 @@ Matrix4x4 MathFunction::MakeIdentity()
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeScaleMatrix(const Vector3& scale)
+Matrix4x4ex MathFunction::MakeScaleMatrix(const Vector3ex& scale)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = scale.x;
 	result.m[1][1] = scale.y;
 	result.m[2][2] = scale.z;
@@ -283,9 +283,9 @@ Matrix4x4 MathFunction::MakeScaleMatrix(const Vector3& scale)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeRotateXMatrix(float radian)
+Matrix4x4ex MathFunction::MakeRotateXMatrix(float radian)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = 1.0f;
 	result.m[1][1] = std::cos(radian);
 	result.m[1][2] = std::sin(radian);
@@ -295,9 +295,9 @@ Matrix4x4 MathFunction::MakeRotateXMatrix(float radian)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeRotateYMatrix(float radian)
+Matrix4x4ex MathFunction::MakeRotateYMatrix(float radian)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = std::cos(radian);
 	result.m[0][2] = -std::sin(radian);
 	result.m[1][1] = 1.0f;
@@ -307,9 +307,9 @@ Matrix4x4 MathFunction::MakeRotateYMatrix(float radian)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeRotateZMatrix(float radian)
+Matrix4x4ex MathFunction::MakeRotateZMatrix(float radian)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = std::cos(radian);
 	result.m[0][1] = std::sin(radian);
 	result.m[1][0] = -std::sin(radian);
@@ -319,9 +319,9 @@ Matrix4x4 MathFunction::MakeRotateZMatrix(float radian)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeTranslateMatrix(const Vector3& translate)
+Matrix4x4ex MathFunction::MakeTranslateMatrix(const Vector3ex& translate)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (i == j) {
@@ -335,22 +335,14 @@ Matrix4x4 MathFunction::MakeTranslateMatrix(const Vector3& translate)
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeAffineMatrix(const Vector3& scale, const Vector3& radian, const Vector3& translate)
+Matrix4x4ex MathFunction::MakeAffineMatrix(const Vector3ex& scale, const Vector3ex& radian, const Vector3ex& translate)
 {
-	/*Matrix4x4 scaleMatrix = MakeScaleMatrix(scale);
-	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(radian.x);
-	Matrix4x4 rotateYMatrix = MakeRotateYMatrix(radian.y);
-	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(radian.z);
-	Matrix4x4 translateMatrix = MakeTranslateMatrix(translate);
-
-	return Multiply(Multiply(Multiply(scaleMatrix, rotateXMatrix), rotateYMatrix), Multiply(rotateZMatrix, translateMatrix));*/
-
 	return Multiply(MakeScaleMatrix(scale), Multiply(Multiply(MakeRotateXMatrix(radian.x), Multiply(MakeRotateYMatrix(radian.y), MakeRotateZMatrix(radian.z))), MakeTranslateMatrix(translate)));
 }
 
-Matrix4x4 MathFunction::MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip)
+Matrix4x4ex MathFunction::MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = 1.0f / aspectRatio * 1.0f / tanf(fovY / 2.0f);
 	result.m[1][1] = 1.0f / tanf(fovY / 2.0f);
 	result.m[2][2] = farClip / (farClip - nearClip);
@@ -359,9 +351,9 @@ Matrix4x4 MathFunction::MakePerspectiveFovMatrix(float fovY, float aspectRatio, 
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
+Matrix4x4ex MathFunction::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = 2 / (right - left);
 	result.m[1][1] = 2 / (top - bottom);
 	result.m[2][2] = 1.0f / (farClip - nearClip);
@@ -372,9 +364,9 @@ Matrix4x4 MathFunction::MakeOrthographicMatrix(float left, float top, float righ
 	return result;
 }
 
-Matrix4x4 MathFunction::MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth)
+Matrix4x4ex MathFunction::MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth)
 {
-	Matrix4x4 result{};
+	Matrix4x4ex result{};
 	result.m[0][0] = width / 2.0f;
 	result.m[1][1] = -height / 2.0f;
 	result.m[2][2] = maxDepth - minDepth;
@@ -385,7 +377,7 @@ Matrix4x4 MathFunction::MakeViewportMatrix(float left, float top, float width, f
 	return result;
 }
 
-void MathFunction::DrawGrid(const Matrix4x4& ViewProjectionMatrix, const Matrix4x4& ViewportMatrix)
+void MathFunction::DrawGrid(const Matrix4x4ex& ViewProjectionMatrix, const Matrix4x4ex& ViewportMatrix)
 {
 	//Grid用
 	const float	kGridHalfWidth = 2.0f;										//Gridの半分の幅
@@ -400,8 +392,8 @@ void MathFunction::DrawGrid(const Matrix4x4& ViewProjectionMatrix, const Matrix4
 		float posX = -kGridHalfWidth + kGridEvery * xIndex;
 
 		//始点と終点
-		Vector3 start = { posX, 0.0f, -kGridHalfWidth };
-		Vector3 end = { posX, 0.0f, kGridHalfWidth };
+		Vector3ex start = { posX, 0.0f, -kGridHalfWidth };
+		Vector3ex end = { posX, 0.0f, kGridHalfWidth };
 		//// ワールド座標系 -> スクリーン座標系まで変換をかける
 		start = Transform(start, Multiply(ViewProjectionMatrix, ViewportMatrix));
 		end = Transform(end, Multiply(ViewProjectionMatrix, ViewportMatrix));
@@ -415,8 +407,8 @@ void MathFunction::DrawGrid(const Matrix4x4& ViewProjectionMatrix, const Matrix4
 			float posZ = -kGridHalfWidth + kGridEvery * zIndex;
 
 			//始点と終点
-			Vector3 startZ = { -kGridHalfWidth, 0.0f, posZ };
-			Vector3 endZ = { kGridHalfWidth, 0.0f, posZ };
+			Vector3ex startZ = { -kGridHalfWidth, 0.0f, posZ };
+			Vector3ex endZ = { kGridHalfWidth, 0.0f, posZ };
 			//// ワールド座標系 -> スクリーン座標系まで変換をかける
 			startZ = Transform(startZ, Multiply(ViewProjectionMatrix, ViewportMatrix));
 			endZ = Transform(endZ, Multiply(ViewProjectionMatrix, ViewportMatrix));
@@ -428,7 +420,7 @@ void MathFunction::DrawGrid(const Matrix4x4& ViewProjectionMatrix, const Matrix4
 	}
 }
 
-void MathFunction::DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+void MathFunction::DrawSphere(const Sphere& sphere, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color)
 {
 	//球体用
 	const uint32_t kSubdivision = 20;										//分割数
@@ -453,21 +445,21 @@ void MathFunction::DrawSphere(const Sphere& sphere, const Matrix4x4& viewProject
 			float nextLon = lon + kLonStep;
 
 			// 球面座標の計算
-			Vector3 pointA
+			Vector3ex pointA
 			{
 				sphere.center.x + sphere.radius * cos(lat) * cos(lon),
 				sphere.center.y + sphere.radius * sin(lat),
 				sphere.center.z + sphere.radius * cos(lat) * sin(lon)
 			};
 
-			Vector3 pointB
+			Vector3ex pointB
 			{
 				sphere.center.x + sphere.radius * cos(nextLat) * cos(lon),
 				sphere.center.y + sphere.radius * sin(nextLat),
 				sphere.center.z + sphere.radius * cos(nextLat) * sin(lon)
 			};
 
-			Vector3 pointC
+			Vector3ex pointC
 			{
 				sphere.center.x + sphere.radius * cos(lat) * cos(nextLon),
 				sphere.center.y + sphere.radius * sin(lat),
@@ -486,21 +478,21 @@ void MathFunction::DrawSphere(const Sphere& sphere, const Matrix4x4& viewProject
 	}
 }
 
-void MathFunction::DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+void MathFunction::DrawPlane(const Plane& plane, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color)
 {
-	Vector3 center = Multiply(plane.distance, plane.normal);
-	Vector3 perpendiculars[4];
+	Vector3ex center = Multiply(plane.distance, plane.normal);
+	Vector3ex perpendiculars[4];
 	perpendiculars[0] = Normalize(Perpendicular(plane.normal));
 	perpendiculars[1] = { -perpendiculars[0].x,-perpendiculars[0].y,-perpendiculars[0].z };
 	perpendiculars[2] = Cross(plane.normal, perpendiculars[0]);
 	perpendiculars[3] = { -perpendiculars[2].x,-perpendiculars[2].y,-perpendiculars[2].z };
 
 	// 平面の四隅を計算
-	Vector3 points[4];
+	Vector3ex points[4];
 	for (int32_t index = 0; index < 4; index++)
 	{
-		Vector3 extend = Multiply(2.0f, perpendiculars[index]);
-		Vector3 point = Add(center, extend);
+		Vector3ex extend = Multiply(2.0f, perpendiculars[index]);
+		Vector3ex point = Add(center, extend);
 		points[index] = Transform(Transform(point, viewProjectionMatrix), viewportMatrix);
 	}
 
@@ -510,9 +502,9 @@ void MathFunction::DrawPlane(const Plane& plane, const Matrix4x4& viewProjection
 	Novice::DrawLine((int)points[3].x, (int)points[3].y, (int)points[0].x, (int)points[0].y, color);
 }
 
-void MathFunction::DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+void MathFunction::DrawTriangle(const Triangle& triangle, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color)
 {
-	Vector3 screenVertices[3];
+	Vector3ex screenVertices[3];
 	for (int i = 0; i < 3; ++i)
 	{
 		screenVertices[i] = Transform(Transform(triangle.vertices[i], viewProjectionMatrix), viewportMatrix);
@@ -523,9 +515,9 @@ void MathFunction::DrawTriangle(const Triangle& triangle, const Matrix4x4& viewP
 		color, kFillModeWireFrame);
 }
 
-void MathFunction::DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+void MathFunction::DrawAABB(const AABB& aabb, const Matrix4x4ex& viewProjectionMatrix, const Matrix4x4ex& viewportMatrix, uint32_t color)
 {
-	Vector3 vertices[8];
+	Vector3ex vertices[8];
 	vertices[0] = { aabb.min.x, aabb.min.y, aabb.min.z };
 	vertices[1] = { aabb.max.x, aabb.min.y, aabb.min.z };
 	vertices[2] = { aabb.min.x, aabb.max.y, aabb.min.z };
@@ -554,7 +546,7 @@ void MathFunction::DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMat
 	Novice::DrawLine((int)vertices[6].x, (int)vertices[6].y, (int)vertices[7].x, (int)vertices[7].y, color);
 }
 
-void MathFunction::DrawBezier(const Vector3& controlPoint0, const Vector3& controlPoint1, const Vector3& controlPoint2, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color)
+void MathFunction::DrawBezier(const Vector3ex& controlPoint0, const Vector3ex& controlPoint1, const Vector3ex& controlPoint2, const Matrix4x4ex& viewProjection, const Matrix4x4ex& viewportMatrix, uint32_t color)
 {
 	const int kNumSegments = 100; // ベジエ曲線を描画するためのセグメント数
 
@@ -563,20 +555,20 @@ void MathFunction::DrawBezier(const Vector3& controlPoint0, const Vector3& contr
 		float t1 = static_cast<float>(i) / kNumSegments;
 		float t2 = static_cast<float>(i + 1) / kNumSegments;
 
-		Vector3 point1 = Lerp(Lerp(controlPoint0, controlPoint1, t1), Lerp(controlPoint1, controlPoint2, t1), t1);
-		Vector3 point2 = Lerp(Lerp(controlPoint0, controlPoint1, t2), Lerp(controlPoint1, controlPoint2, t2), t2);
+		Vector3ex point1 = Lerp(Lerp(controlPoint0, controlPoint1, t1), Lerp(controlPoint1, controlPoint2, t1), t1);
+		Vector3ex point2 = Lerp(Lerp(controlPoint0, controlPoint1, t2), Lerp(controlPoint1, controlPoint2, t2), t2);
 
-		Vector3 screenPoint1 = Transform(point1, viewProjection);
+		Vector3ex screenPoint1 = Transform(point1, viewProjection);
 		screenPoint1 = Transform(screenPoint1, viewportMatrix);
 
-		Vector3 screenPoint2 = Transform(point2, viewProjection);
+		Vector3ex screenPoint2 = Transform(point2, viewProjection);
 		screenPoint2 = Transform(screenPoint2, viewportMatrix);
 
 		Novice::DrawLine((int)screenPoint1.x, (int)screenPoint1.y, (int)screenPoint2.x, (int)screenPoint2.y, color);
 	}
 }
 
-void MathFunction::DrawControlPoint(const Vector3& controlPoint, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix)
+void MathFunction::DrawControlPoint(const Vector3ex& controlPoint, const Matrix4x4ex& viewProjection, const Matrix4x4ex& viewportMatrix)
 {
 	Sphere sphere = { controlPoint, 0.01f };						// 0.01mの半径の球体
 	DrawSphere(sphere, viewProjection, viewportMatrix, 0x000000);	// 黒色で描画
@@ -621,19 +613,19 @@ bool MathFunction::IsCollision(const Segment& segment, const Plane& plane)
 bool MathFunction::IsCollision(const Triangle& triangle, const Segment& segment)
 {
 	// 三角形の辺
-	Vector3 edge1 = Subtract(triangle.vertices[1], triangle.vertices[0]);
-	Vector3 edge2 = Subtract(triangle.vertices[2], triangle.vertices[0]);
+	Vector3ex edge1 = Subtract(triangle.vertices[1], triangle.vertices[0]);
+	Vector3ex edge2 = Subtract(triangle.vertices[2], triangle.vertices[0]);
 
 	// 平面の法線ベクトルを計算
-	Vector3 normal = Cross(edge1, edge2);
+	Vector3ex normal = Cross(edge1, edge2);
 	normal = Normalize(normal);
 
 	// 線分の方向ベクトル
-	Vector3 dir = segment.diff;
+	Vector3ex dir = segment.diff;
 	dir = Normalize(dir);
 
 	// 平面と線分の始点のベクトル
-	Vector3 diff = Subtract(triangle.vertices[0], segment.origin);
+	Vector3ex diff = Subtract(triangle.vertices[0], segment.origin);
 
 	// 線分が平面と平行かどうかをチェック
 	float dotND = Dot(normal, dir);
@@ -650,12 +642,12 @@ bool MathFunction::IsCollision(const Triangle& triangle, const Segment& segment)
 		return false; // 線分上に交点がない
 	}
 
-	Vector3 intersection = Add(segment.origin, Multiply(t, dir));
+	Vector3ex intersection = Add(segment.origin, Multiply(t, dir));
 
 	// バリツチェックで三角形の内部に交点があるかを確認
-	Vector3 c0 = Cross(Subtract(triangle.vertices[1], triangle.vertices[0]), Subtract(intersection, triangle.vertices[0]));
-	Vector3 c1 = Cross(Subtract(triangle.vertices[2], triangle.vertices[1]), Subtract(intersection, triangle.vertices[1]));
-	Vector3 c2 = Cross(Subtract(triangle.vertices[0], triangle.vertices[2]), Subtract(intersection, triangle.vertices[2]));
+	Vector3ex c0 = Cross(Subtract(triangle.vertices[1], triangle.vertices[0]), Subtract(intersection, triangle.vertices[0]));
+	Vector3ex c1 = Cross(Subtract(triangle.vertices[2], triangle.vertices[1]), Subtract(intersection, triangle.vertices[1]));
+	Vector3ex c2 = Cross(Subtract(triangle.vertices[0], triangle.vertices[2]), Subtract(intersection, triangle.vertices[2]));
 
 	if (Dot(c0, normal) >= 0.0f && Dot(c1, normal) >= 0.0f && Dot(c2, normal) >= 0.0f)
 	{
@@ -675,7 +667,7 @@ bool MathFunction::IsCollision(const AABB& aabb1, const AABB& aabb2)
 bool MathFunction::IsCollision(const AABB& aabb, const Sphere& sphere)
 {
 	//最近接点を求める
-	Vector3 clossestPoint
+	Vector3ex clossestPoint
 	{
 		std::clamp(sphere.center.x,aabb.min.x,aabb.max.x),
 		std::clamp(sphere.center.y,aabb.min.y,aabb.max.y),

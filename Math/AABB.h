@@ -1,9 +1,9 @@
 #pragma once
-#include "Vector3.h"
+#include "Vector3ex.h"
 
 //AABB
 struct AABB final
 {
-	Vector3 min; //最小値
-	Vector3 max; //最大値
+	Vector3ex min; //最小値
+	Vector3ex max; //最大値
 };
